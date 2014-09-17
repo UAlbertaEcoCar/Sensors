@@ -5,9 +5,11 @@
 */
 
 #include <p18cxxx.h>	// Contains core functions for the PIC 18F series microcontroller.
-#include "J1939.H"	// Header file for CANbus J1939 routines.
+#include "../Common/J1939.H" // Header file for CANbus J1939 routines.
+#include "../Common/ecocar.h"
 #include <usart.h>	// Contains code for USART communications
-#include "ecocar.h"
+
+
 
 #pragma config OSC = IRCIO67	// This configures the PIC's internal oscillator to be used, instead of an external one.
 #pragma config WDT = OFF        // Watchdog Timer disabled (control is placed on the SWDTEN bit)

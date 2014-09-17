@@ -4,8 +4,8 @@
 */
 
 #include <p18cxxx.h>
-#include "J1939.h"
-#include "ecocar.h"
+#include "../Common/J1939.H"
+#include "../Common/ecocar.h"
 #include <usart.h>
 #include <delays.h>
 #include <timers.h>

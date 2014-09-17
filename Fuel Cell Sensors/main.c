@@ -89,8 +89,8 @@
 #define PURGE 1
 
 
-#include "J1939.h"
-#include "ecocar.h"
+#include "../Common/J1939.H"
+#include "../Common/ecocar.h"
 #include <usart.h>
 #include <adc.h>    // Analog
 
