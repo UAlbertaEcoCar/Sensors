@@ -29,7 +29,7 @@ void main( void )
                                     // AnalogHelper.c reenables them as it goes
     TRISA = 0b00000111;             // E-STOP is RA2
     TRISB = 0b00001000;             // Set B2 (CANTX) to output, B3 (CANRX) to input
-    TRISC = 0b00000000;             // Set C to all output
+    TRISC = 0b01000000;             // RC6 Is input
 
     LATA = 0;                       // Reset A latches to low
     LATB = 0;                       // Reset B latches to low
@@ -74,11 +74,13 @@ void main( void )
         int H2_OVERRIDE = PORTCbits.RC6;
         int H2_LOCAL_CONC = ReadAnalog(0);
         int H2_REMOTE_CONC = ReadAnalog(1);
-        int E_STOP = PORTAbits.RA2;
+        int E_STOP = ReadAnalog(2);
 
         // If H2_OVERRIDE, turn on an indicator pattern
         if(H2_OVERRIDE)
-            SetDebugStatus(1);
+            SetDebugStatus(5);
+        else
+            SetDebugStatus(0);
 
         // Compare the remote sensor reading with the defined threshold
         if(H2_REMOTE_CONC < _REMOTE_H2_OKAY_THRES_)
@@ -93,7 +95,7 @@ void main( void )
             H2_L_OKAY = 0;
 
         // If both are okay, and e-stop is not pressed, we keep running
-        if(H2_L_OKAY == 1 && H2_R_OKAY == 1 && E_STOP == 0)
+        if(H2_L_OKAY == 1 && H2_R_OKAY == 1 && E_STOP < 3500)
             H2_GLOBAL_OKAY = 1;
         else
             H2_GLOBAL_OKAY = 0;

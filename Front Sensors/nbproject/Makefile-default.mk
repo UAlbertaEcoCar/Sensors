@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c ../Common/J1939.C ../Common/ecocar.c ../Common/AnalogHelper.c
+SOURCEFILES_QUOTED_IF_SPACED=../Common/AnalogHelper.c main.c ../Common/J1939.C ../Common/ecocar.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/_ext/2108356922/J1939.o ${OBJECTDIR}/_ext/2108356922/ecocar.o ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/_ext/2108356922/J1939.o.d ${OBJECTDIR}/_ext/2108356922/ecocar.o.d ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/2108356922/AnalogHelper.o ${OBJECTDIR}/main.o ${OBJECTDIR}/_ext/2108356922/J1939.o ${OBJECTDIR}/_ext/2108356922/ecocar.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/2108356922/AnalogHelper.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/_ext/2108356922/J1939.o.d ${OBJECTDIR}/_ext/2108356922/ecocar.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/_ext/2108356922/J1939.o ${OBJECTDIR}/_ext/2108356922/ecocar.o ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o
+OBJECTFILES=${OBJECTDIR}/_ext/2108356922/AnalogHelper.o ${OBJECTDIR}/main.o ${OBJECTDIR}/_ext/2108356922/J1939.o ${OBJECTDIR}/_ext/2108356922/ecocar.o
 
 # Source Files
-SOURCEFILES=main.c ../Common/J1939.C ../Common/ecocar.c ../Common/AnalogHelper.c
+SOURCEFILES=../Common/AnalogHelper.c main.c ../Common/J1939.C ../Common/ecocar.c
 
 
 CFLAGS=
@@ -86,6 +86,13 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/_ext/2108356922/AnalogHelper.o: ../Common/AnalogHelper.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/2108356922 
+	@${RM} ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION) -I"../Common" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o   ../Common/AnalogHelper.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/2108356922/AnalogHelper.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/main.o.d 
@@ -107,14 +114,14 @@ ${OBJECTDIR}/_ext/2108356922/ecocar.o: ../Common/ecocar.c  nbproject/Makefile-${
 	@${DEP_GEN} -d ${OBJECTDIR}/_ext/2108356922/ecocar.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/2108356922/ecocar.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
+else
 ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o: ../Common/AnalogHelper.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/2108356922 
 	@${RM} ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o.d 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION) -I"../Common" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o   ../Common/AnalogHelper.c 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"../Common" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o   ../Common/AnalogHelper.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/2108356922/AnalogHelper.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
-else
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/main.o.d 
@@ -135,13 +142,6 @@ ${OBJECTDIR}/_ext/2108356922/ecocar.o: ../Common/ecocar.c  nbproject/Makefile-${
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"../Common" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/_ext/2108356922/ecocar.o   ../Common/ecocar.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/_ext/2108356922/ecocar.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/2108356922/ecocar.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
-	
-${OBJECTDIR}/_ext/2108356922/AnalogHelper.o: ../Common/AnalogHelper.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/2108356922 
-	@${RM} ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o.d 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"../Common" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o   ../Common/AnalogHelper.c 
-	@${DEP_GEN} -d ${OBJECTDIR}/_ext/2108356922/AnalogHelper.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/2108356922/AnalogHelper.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
 endif
 
