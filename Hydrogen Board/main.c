@@ -12,7 +12,8 @@
 #pragma config OSC = IRCIO67    // Oscillator Selection Bit
 #pragma config BOREN = OFF      // Brown-out Reset disabled in hardware and software
 #pragma config WDT = OFF        // Watchdog Timer disabled (control is placed on the SWDTEN bit)
-#pragma config PBADEN = OFF
+#pragma config PBADEN = OFF     // Port B analog off
+#pragma config LVP = OFF        // Low voltage programming off
 
 J1939_MESSAGE Msg;
 
@@ -46,6 +47,8 @@ void main( void )
     // Wait a bit for PLL to stabilize.
     Delay10KTCYx(10);
 
+    ShowBootupAnimation();
+
     J1939_Initialization( TRUE );
 
 
@@ -68,9 +71,14 @@ void main( void )
         static int H2_R_OKAY;
         static int H2_L_OKAY;
         static int H2_GLOBAL_OKAY;
+        int H2_OVERRIDE = PORTCbits.RC6;
         int H2_LOCAL_CONC = ReadAnalog(0);
         int H2_REMOTE_CONC = ReadAnalog(1);
         int E_STOP = PORTAbits.RA2;
+
+        // If H2_OVERRIDE, turn on an indicator pattern
+        if(H2_OVERRIDE)
+            SetDebugStatus(1);
 
         // Compare the remote sensor reading with the defined threshold
         if(H2_REMOTE_CONC < _REMOTE_H2_OKAY_THRES_)
@@ -90,15 +98,15 @@ void main( void )
         else
             H2_GLOBAL_OKAY = 0;
 
-        if(!H2_GLOBAL_OKAY)
+        if(!H2_GLOBAL_OKAY && !H2_OVERRIDE)
         {
             // H2 Conc is off the charts man!
             // Shut that thing down!
             // Should shut down literally everything, so we may lose power
-            LATCbits.LATC7 = 0; // H2_OK
-            LATCbits.LATC5 = 1; // ERR LED
-            while(PORTCbits.RC7 != 0);
-            while(1);
+            LATCbits.LATC7 = 0;         // H2_OK
+            SetErrorState(1);       // ERR LED
+            while(PORTCbits.RC7 != 0);  // Make sure the thing is on
+            while(1);                   // Wait forever
 
         } else
         {
@@ -115,8 +123,5 @@ void main( void )
             if ( J1939_Flags.ReceivedMessagesDropped )
                 J1939_Flags.ReceivedMessagesDropped = 0;
         }
-        
-        LATBbits.LATB0 ^= 1;
     }
-    
 }
