@@ -26,7 +26,7 @@ void main( void )
     // Initialize registers:
     ADCON1 = 0x0F;                  // Disable analog inputs on all A ports.
                                     // AnalogHelper.c reenables them as it goes
-    TRISA = 0b00000100;             // E-STOP is RA2
+    TRISA = 0b00000111;             // E-STOP is RA2
     TRISB = 0b00001000;             // Set B2 (CANTX) to output, B3 (CANRX) to input
     TRISC = 0b00000000;             // Set C to all output
 
@@ -76,7 +76,7 @@ void main( void )
         if(H2_REMOTE_CONC < _REMOTE_H2_OKAY_THRES_)
             H2_R_OKAY = 1;
         else
-            H2_L_OKAY = 0;
+            H2_R_OKAY = 0;
         
         // Compare the local sensor reading with the defined threshold
         if(H2_LOCAL_CONC < _LOCAL_H2_OKAY_THRES_)
@@ -98,6 +98,7 @@ void main( void )
             LATCbits.LATC7 = 0; // H2_OK
             LATCbits.LATC5 = 1; // ERR LED
             while(PORTCbits.RC7 != 0);
+            while(1);
 
         } else
         {
