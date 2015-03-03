@@ -11,6 +11,26 @@
 #ifndef ECOCAR_H
 #define	ECOCAR_H
 
+#ifndef DBG_LED0
+#define DBG_LED0 LATBbits.LATB0
+#endif
+
+#ifndef DBG_LED1
+#define DBG_LED1 LATBbits.LATB1
+#endif
+
+#ifndef DBG_LED2
+#define DBG_LED2 LATBbits.LATB4
+#endif
+
+#ifndef DBG_LED3
+#define DBG_LED3 LATBbits.LATB5
+#endif
+
+#ifndef ERR_LED
+#define ERR_LED  LATCbits.LATC5
+#endif
+
 // Function prototype declarations for ecocar.c:
 void Broadcast_Data(J1939_MESSAGE *MsgPtr, unsigned char DataType, unsigned char MsgData[]);
 void Request_Data(J1939_MESSAGE *MsgPtr, unsigned int DestAddr, unsigned int DataType);
@@ -18,7 +38,9 @@ void InitEcoCar(void);
 void Set_Oscillator(void);
 void putUSART(int i);
 void putSerialData(char DataType, char DataMSB, char DataLSB);
-
+void SetDebugStatus(unsigned int status);
+void SetErrorState(unsigned char err);
+void ShowBootupAnimation();
 
 // =====================================
 // Sensor data types (value of Msg.GroupExtension)

@@ -92,3 +92,28 @@ void putSerialData(char DataType, char DataMSB, char DataLSB)
     putUSART(DataMSB);
     putUSART(DataLSB);
 }
+
+void SetDebugStatus(unsigned int status) {
+    DBG_LED0 = !!(status & 0b0001);
+    DBG_LED1 = !!(status & 0b0010);
+    DBG_LED2 = !!(status & 0b0100);
+    DBG_LED3 = !!(status & 0b1000);
+}
+
+void SetErrorState(unsigned char err) {
+    ERR_LED = !!err;
+}
+
+void ShowBootupAnimation() {
+    int i;
+
+    SetErrorState(1);
+
+    for (i = 0; i < 16; ++i) {
+        SetDebugStatus(i);
+        Delay10KTCYx(10L);
+    }
+
+    SetErrorState(0);
+    SetDebugStatus(0);
+}

@@ -15,6 +15,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="Common" displayName="Common" projectFiles="true">
+        <itemPath>../Common/AnalogHelper.c</itemPath>
+        <itemPath>../Common/AnalogHelper.h</itemPath>
+      </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>../Common/J1939.C</itemPath>
       <itemPath>../Common/ecocar.c</itemPath>
@@ -114,8 +118,9 @@
         <property key="Freeze Peripherals" value="true"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
         <property key="ToolFirmwareFilePath"
-                  value="Press to browse for a specific firmware version"/>
-        <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+                  value="C:\Program Files (x86)/Microchip/MPLABX/mplab_ide/mplablibs/modules/ext/PICKIT3.jar/PK3FW_012892.jam"/>
+        <property key="ToolFirmwareOption.UseLatestFirmware" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
