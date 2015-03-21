@@ -72,7 +72,7 @@ void InitEcoCar()
     TRISA = 0b00000010;             // Set A0 to output, A1 to input
     TRISB = 0b00001000;             // Set B2 (CANTX) to output, B3 (CANRX) to input
     TRISC = 0b10000000;				// Set C to all output
-    LATC = 0b10000000;				// Reset C latches to low
+    LATC  = 0b10000000;				// Reset C latches to low
 
     //LATCbits.LATC6 = 1;              // TX should be held high when not transmitting (for wireless)
 

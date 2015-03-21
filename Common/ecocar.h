@@ -6,7 +6,7 @@
  * Last edited: Feb. 22, 2013
  */
 
-#include "J1939.H"
+#include "../Common/J1939.H"
 
 #ifndef ECOCAR_H
 #define	ECOCAR_H
@@ -30,6 +30,30 @@
 #ifndef ERR_LED
 #define ERR_LED  LATCbits.LATC5
 #endif
+
+// Convenience defines for doing I/O
+#define PORT_INPUT_HIGH 1
+#define PORT_INPUT_LOW  0
+
+#define PORT_OUTPUT_HIGH 1
+#define PORT_OUTPUT_LOW  0
+
+#define PORT_DIRECTION_INPUT  1
+#define PORT_DIRECTION_OUTPUT 0
+
+// Interrupt defines
+#define INTERRUPT_FLAG_SET 1
+#define INTERRUPT_FLAG_CLR 0
+
+#define TIMER_ENABLED  1
+#define TIMER_DISABLED 0
+
+// General purpose register settings
+#define BIT_SET 1
+#define BIT_CLR 0
+
+#define ENABLED  1
+#define DISABLED 0
 
 // Function prototype declarations for ecocar.c:
 void Broadcast_Data(J1939_MESSAGE *MsgPtr, unsigned char DataType, unsigned char MsgData[]);
@@ -69,6 +93,12 @@ void ShowBootupAnimation();
 #define DATA_VACCESSORY			0xC3
 #define DATA_BKPALARM   		0xC4
 
+#define CTRL_CRUISE_SET                 0xD0
+#define CTRL_CRUISE_INC                 0xD1
+#define CTRL_CRUISE_DEC                 0xD2
+#define CTRL_CRUISE_CLR                 0xD3
+#define DATA_MOTOR_PERC                 0xD4
+
 // Notifications:
 #define CYCLE_COMPLETE			0xE0
 #define ACK_DONE                        0xE1
@@ -79,7 +109,8 @@ void ShowBootupAnimation();
 // =====================================
 // Message types (value of Msg.PDU_FORMAT)
 // =====================================
-#define PDU_REQUEST				0x01	// Request for data
+#define PDU_REQUEST			0x01	// Request for data
+#define PDU_CONTROL                     0x02    // Control messages
 #define PDU_BROADCAST			0xFF	// Broadcast
 
 // =========================
@@ -98,7 +129,11 @@ void ShowBootupAnimation();
 
 #define NODE_BROADCAST		255	// Global address designated for broadcasts
 
+#define true  1
+#define false 0
+typedef unsigned char bool;
 
+#define forever while (true)
 
 #endif	/* ECOCAR_H */
 

@@ -328,7 +328,7 @@ void isr(void) {
     static unsigned long long int time = 0;
     static unsigned long long int speed = 0;
     static int last_canbus_send = 0;
-    int last_backoff_time = 0;
+    static unsigned long long int last_backoff_time = 0;
     int last_speed_tick = 0;
 
     if (INTCONbits.TMR0IF) {
