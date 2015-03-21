@@ -45,7 +45,7 @@
  ********************************************************************/
 
 #ifndef __j1939def
-#include "j1939def.h"
+#include "../Common/j1939def.h"
 #endif
 
 #ifndef __J1939_H

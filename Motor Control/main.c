@@ -17,6 +17,8 @@
 #include <pwm.h>
 #include <adc.h>
 #include <timers.h>
+#include "..\Common\J1939.h"
+#include "..\Common\ecocar.h"
 
 #pragma config OSC = IRCIO67    // Oscillator Selection Bit
 #pragma config BOREN = OFF      // Brown-out Reset disabled in hardware and software
@@ -33,12 +35,18 @@ typedef enum cruise {
 } cruise_t;
 
 cruise_t Cruise = CRUISE_OFF;
+J1939_MESSAGE Msg;
 
 void main(void) {
+    InitEcoCar();
+    J1939_Initialization( TRUE );
 
-    ADCON0 = 0x01;                  // Initialize the ADC Registers
-    ADCON1 = 0x0E;
-    ADCON2 = 0x8E;
+    while (J1939_Flags.WaitingForAddressClaimContention)
+        J1939_Poll(5);
+
+//    ADCON0 = 0x01;                  // Initialize the ADC Registers
+//    ADCON1 = 0x0E;
+//    ADCON2 = 0x8E;
 
     TRISA = 0b00000001;             // Set A0 to input, others to output
     TRISB = 0b00001011;             // Set B2 (CANTX) to output, B3 (CANRX) to input
@@ -50,6 +58,20 @@ void main(void) {
     OpenPWM1(0xFF);                 //Turn on PWM capabilities
 
     while(1){
+        // Poll the CANbus briefly
+        J1939_Poll(10);
+        while (RXQueueCount > 0) {
+            J1939_DequeueMessage( &Msg );
+            LATCbits.LATC5 = 1;
+
+            // Currently, only broadcast messages are repeated
+//            if( Msg.PDUFormat == PDU_BROADCAST )
+//                putSerialData(Msg.GroupExtension, Msg.Data[0], Msg.Data[1]);
+
+            if ( J1939_Flags.ReceivedMessagesDropped )
+                J1939_Flags.ReceivedMessagesDropped = 0;
+        }
+
         if(Cruise == CRUISE_OFF){
             ConvertADC();           //Read from ADC
             while(BusyADC());       //Wait for ADC to finish conversion

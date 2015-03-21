@@ -17,44 +17,51 @@
 
 J1939_MESSAGE Msg;
 void main( void ) {
+//    LATA = 0;
+//    LATB = 0;
+//    LATC = 0;
+
     // Pins C6 and C7 are used for UART TX and RX respectively
     InitEcoCar();
     TRISCbits.RC4 = 0;
+    TRISCbits.RC5 = 0;
+    TRISBbits.RB4 = 0;
+    LATBbits.LATB4 = 1;
 
-    // Open USART:
-    OpenUSART( USART_TX_INT_OFF &
-        USART_RX_INT_OFF &
-        USART_ASYNCH_MODE &
-        USART_EIGHT_BIT &
-        USART_CONT_RX &
-        USART_BRGH_HIGH, 207 );     // 9600 bps baud rate
-
-    RCSTAbits.SPEN = 1;		// Enable USART on pins C6, C7
-    BAUDCONbits.BRG16 = 0;	// 8-bit BR Generator
-    
-    J1939_Initialization( TRUE );
-
-    while (J1939_Flags.WaitingForAddressClaimContention)
-        J1939_Poll(5);
-    
+//    // Open USART:
+//    OpenUSART( USART_TX_INT_OFF &
+//        USART_RX_INT_OFF &
+//        USART_ASYNCH_MODE &
+//        USART_EIGHT_BIT &
+//        USART_CONT_RX &
+//        USART_BRGH_HIGH, 207 );     // 9600 bps baud rate
+//
+//    RCSTAbits.SPEN = 1;		// Enable USART on pins C6, C7
+//    BAUDCONbits.BRG16 = 0;	// 8-bit BR Generator
+//
+//    J1939_Initialization( TRUE );
+//
+//    while (J1939_Flags.WaitingForAddressClaimContention)
+//        J1939_Poll(5);
+    LATCbits.LATC5 = 1;
     // CANbus is now initialized and we can now loop while we check
     // our message receive buffer for new CANbus messages (where all received messages are put).
-    while (1) {
-        //Receive Messages
-        J1939_Poll(10);
-        while (RXQueueCount > 0) {
-
-            J1939_DequeueMessage( &Msg );
-            if ( Msg.GroupExtension >= 0xA0 && Msg.GroupExtension <= 0xA7 )
-                LATCbits.LATC4 = 1;
-            // Currently, only broadcast messages are repeated
-//            if( Msg.PDUFormat == PDU_BROADCAST )
-                putSerialData(Msg.GroupExtension, Msg.Data[0], Msg.Data[1]);
-            
-            if ( J1939_Flags.ReceivedMessagesDropped )
-                J1939_Flags.ReceivedMessagesDropped = 0;
-
-            LATCbits.LATC4 = 0;
-        }
-    }
+//    while (1) {
+//        //Receive Messages
+//        J1939_Poll(10);
+//        while (RXQueueCount > 0) {
+//
+//            J1939_DequeueMessage( &Msg );
+//            if ( Msg.GroupExtension >= 0xA0 && Msg.GroupExtension <= 0xA7 )
+//                LATCbits.LATC4 = 1;
+//            // Currently, only broadcast messages are repeated
+////            if( Msg.PDUFormat == PDU_BROADCAST )
+//                putSerialData(Msg.GroupExtension, Msg.Data[0], Msg.Data[1]);
+//
+//            if ( J1939_Flags.ReceivedMessagesDropped )
+//                J1939_Flags.ReceivedMessagesDropped = 0;
+//
+//            LATCbits.LATC4 = 0;
+//        }
+//    }
 }
